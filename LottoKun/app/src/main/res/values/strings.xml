@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LottoKun</string>
+    <string name="lotto1">1등 1/8,145,060 번호 6 일치</string>
+    <string name="lotto2">
+
+        <item> 1등 1/8,145,060 번호 6 일치 </item>
+        <item> 2등 1/1,357,510 번호 5 + 보너스번호 </item>
+        <item> 3등 1/35,724 번호 5 + 보너스번호 </item>
+    </string>
+</resources>

@@ -1,0 +1,2 @@
+rootProject.name='LottoKun'
+include ':app'
