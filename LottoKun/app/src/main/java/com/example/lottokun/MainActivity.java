@@ -34,21 +34,18 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     View mView1, mView2, mView3; //다른 뷰
     ProgressBar pross;
-    CustomDialog customDialog;
-    CustomDialog customDialog2;
+    CustomDialog customDialog, customDialog2, customDialog3, customDialog4;  //고정수용 다이얼로그
 
+    int primenum1,primenum2,primenum3,primenum4=0;
 
-    int primenum1=0;
-    int primenum2=0;
-
-    boolean primenum1_click=false;
-    boolean primenum2_click=false;
-
+    int one,two,three=0;
 
 
     TextView valtv; //횟수모니터
     ListView Lottoitem;
-    boolean th_flag = true;
+    boolean th_flag, th_flag2 = true;
+    boolean prime_flag = false; //프라임넘버
+    boolean noclear=false;
     int number = 0; //횟수
 
     Button stopbtn; //멈춤
@@ -59,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
     String buffer ; //커스텀 가져오기.
     ArrayAdapter<String> Adapter;
 
-    TextView primeview1;
-    TextView primeview2;
+    TextView gametv;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         mView2 = findViewById(R.id.View2_game);
         mView3 = findViewById(R.id.View3_save);
 
-        primeview1=(TextView)findViewById(R.id.grida1);
-        primeview2=(TextView)findViewById(R.id.grida4);
 
         //버튼 리스너 부착
         ((Button) findViewById(R.id.btn1)).setOnClickListener(mClickListener);
@@ -95,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         customDialog = new CustomDialog(this, positiveListener, negativeListener);
         customDialog2 = new CustomDialog(this, positiveListener1, negativeListener1);
+        customDialog3 = new CustomDialog(this,positiveListener3,negativeListener3);
+
+        gametv=(TextView)findViewById(R.id.View2_gameTV);
 
     }
 
@@ -108,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.grida4:
                 customDialog2.show();
                 break;
+            case R.id.gridaaa1:
+                customDialog3.show();
+                break;
+            case R.id.gridaaa4:
+
+
         }
 
     }
@@ -118,22 +122,25 @@ public class MainActivity extends AppCompatActivity {
         int[] arr={0,0,0,0,0,0};
         TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
 
+
         switch (view.getId()){
             case R.id.View2_gameran:
                 L1.setLotto();
                 Lottoprint(L1,"grid_game",1500);
+
                 break;
             case R.id.View2_gamechoice:
                 arr=getchoice("grid_gameE");
                 for(int i=0; i<6;i++){
                     if(arr[i]<=0 || arr[i]>45){
-                        gametv.setText("1~45 숫자 다시 입력하세요.");
+                        gametv.setText("1~45 사이에 숫자를 모든 칸에 입력하세요.");
                         return;
                     }
                 }
                 L1.setLotto(arr);
                 Lottoprint(L1,"grid_game",1500);
                 gametv.setText("커스텀 픽 완료");
+
                 break;
 
             case R.id.View2_gameload:
@@ -145,13 +152,21 @@ public class MainActivity extends AppCompatActivity {
                 L1.setLotto(arr);
                 Lottoprint(L1,"grid_game",1500);
                 Toast.makeText(getApplicationContext(), "저장된 로또를 성공적으로 가져왔습니다.", Toast.LENGTH_SHORT).show();
-               gametv.setText(arrbuf[0]+arrbuf[1]+arrbuf[2]+arrbuf[3]+arrbuf[4]+arrbuf[5] +"가져왔다");
-
+               gametv.setText(arrbuf[0]+arrbuf[1]+arrbuf[2]+arrbuf[3]+arrbuf[4]+arrbuf[5] +"저장로또 픽 완료");
 
                 break;
 
+            case R.id.View2_gamestart:
+                th_flag2=true;
+                    CalThread2 cal =new CalThread2(arr);
+                    Thread th =new Thread(cal);
+                    th.start();
 
-
+                break;
+            case R.id.View2_gamestop:
+                th_flag2=false;
+                Toast.makeText(getApplicationContext(), "로또 시뮬레이션 종료", Toast.LENGTH_SHORT).show();
+                break;
         }
 
 
@@ -159,11 +174,12 @@ public class MainActivity extends AppCompatActivity {
 
     View.OnClickListener positiveListener = new View.OnClickListener() {
         public void onClick(View v) {
+            TextView primeview1=(TextView)findViewById(R.id.grida1);
                 primenum1=customDialog.getPrime();
+                prime_flag=true; //한정 조건검사.
                 primeview1.setText(primenum1+"");
-                primenum1_click=false;
-            customDialog.dismiss();
-            Toast.makeText(getApplicationContext(), "고정 수 (" + primenum1+ ") 선택 완료", Toast.LENGTH_SHORT).show();
+                customDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "고정 수 (" + primenum1+ ") 선택 완료", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -176,14 +192,35 @@ public class MainActivity extends AppCompatActivity {
 
     View.OnClickListener positiveListener1 = new View.OnClickListener() {
         public void onClick(View v) {
-                primenum2=customDialog2.getPrime();
-                primeview2.setText(primenum2+"");
-            customDialog2.dismiss();
-            Toast.makeText(getApplicationContext(), "고정 수 (" + primenum2+ ") 선택 완료", Toast.LENGTH_SHORT).show();
+            TextView primeview2=(TextView)findViewById(R.id.grida1);
+               primenum2=customDialog2.getPrime();
+               prime_flag=true;
+               primeview2.setText(primenum2+"");
+               customDialog2.dismiss();
+               Toast.makeText(getApplicationContext(), "고정 수 (" + primenum2+ ") 선택 완료", Toast.LENGTH_SHORT).show();
         }
     };
 
     View.OnClickListener negativeListener1 = new View.OnClickListener() {
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "취소버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+            customDialog2.dismiss();
+        }
+    };
+
+
+    View.OnClickListener positiveListener3 = new View.OnClickListener() {
+        public void onClick(View v) {
+            TextView primeview3=findViewById(R.id.gridaaa1);
+            prime_flag=true;
+            primenum3=customDialog3.getPrime();
+            primeview3.setText(primenum3+"");
+            customDialog3.dismiss();
+            Toast.makeText(getApplicationContext(), "고정 수 (" + primenum3+ ") 선택 완료", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    View.OnClickListener negativeListener3 = new View.OnClickListener() {
         public void onClick(View v) {
             Toast.makeText(getApplicationContext(), "취소버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
             customDialog2.dismiss();
@@ -317,6 +354,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.main_btn1:
                 th_flag = true;
                 saveflag = true;
+                noclear=true;
                 int num = 0;
                 pross.setVisibility(View.VISIBLE);
                 stopbtn.setVisibility(View.VISIBLE);
@@ -330,18 +368,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.main_btn2:
                 setLottoPrint(2000);
                 saveflag = true;
+                noclear=true; //클리어 플래그
 
                 break;
 
             case R.id.main_btn3:
                 //초기화 버튼
                 stopbtn.setVisibility(View.INVISIBLE);
-                setLottoPrint("b");
-                valtv.setText("초기화 완료");
+                if(saveflag){
+                    valtv.setText("초기화 완료");
+                    setLottoPrint("b");
+                }
+
                 number = 0;
 
             case R.id.main_btn4:
-
                 th_flag = false;
                 if (number > 1) {
                     valtv.setText((number - 1) + "회");
@@ -443,7 +484,7 @@ public class MainActivity extends AppCompatActivity {
         return arr2;
     } //랜덤 넘버 생성 메소드
 
-    public int Rotocheck(int[] arr, int[] arr2) {
+    public static int Lottocheck(int[] arr, int[] arr2) {
         int num = 0;
 
         for (int i = 0; i < 6; i++) {
@@ -464,18 +505,31 @@ public class MainActivity extends AppCompatActivity {
 
 
         L1.setLotto();
-        if(primenum1>0){
-            L1.arr[1]=primenum1;
+        if(prime_flag){
+            if(primenum1>0){
+                L1.arr[1]=primenum1;
+            }
+            if(primenum2>0){
+                L1.arr[4]=primenum2;
+            }
         }
-        if(primenum2>0){
-            L1.arr[4]=primenum2;
-        }
+
         Lottoprint(L1, "grida", num); //2번
 
         L1.setLotto();
         Lottoprint(L1, "gridaa", num); //3번
 
         L1.setLotto();
+
+
+        if(prime_flag){
+            if(primenum3>0){
+                L1.arr[1]=primenum3;
+            }
+            if(primenum4>0){
+                L1.arr[4]=primenum4;
+            }
+        }
 
         Lottoprint(L1, "gridaaa", num); //4번
 
@@ -489,21 +543,23 @@ public class MainActivity extends AppCompatActivity {
     public void setLottoPrint(String A) {
         Lotto L1 = new Lotto();
         int[] arr2 = {0, 0, 0, 0, 0, 0};
-        L1.arr=arr2;
-        saveflag = false; //초기화할때는 애니메이션 안이쁘게
+        if(noclear){
+            L1.arr=arr2;
+            saveflag = false; //초기화할때는 애니메이션 안이쁘게
+            primenum1=0;
+            primenum2=0;
+            primenum3=0;
+            primenum4=0;
+            Lottoprint(L1, "grid", 2000); //1번
+            Lottoprint(L1, "grida", 2000); //2번
+            Lottoprint(L1, "gridaa", 2000); //3번
+            Lottoprint(L1, "gridaaa", 2000); //4번
+            Lottoprint(L1, "gridaaaa", 2000); //4번
+            noclear=false;
+        }
 
-        primenum1=0;
-        primenum2=0;
-        primenum1_click=false;
-        primenum2_click=false;//고정수들 초기화
 
-
-        Lottoprint(L1, "grid", 2000); //1번
-        Lottoprint(L1, "grida", 2000); //2번
-        Lottoprint(L1, "gridaa", 2000); //3번
-        Lottoprint(L1, "gridaaa", 2000); //4번
-        Lottoprint(L1, "gridaaaa", 2000); //4번
-    }  //초기화용 오버로딩
+        } //초기화용 오버로딩
 
     public String allgetLottoPrint(String View_name) {
         StringBuilder B1 = new StringBuilder();
@@ -527,6 +583,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -540,12 +597,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     class CalThread implements Runnable {
-        Handler hand;
-
         public void run() {
 
             while (th_flag) {
-
+                ran();
                 Message msg = mHandler.obtainMessage();
                 mHandler.sendMessage(msg);
                 try {
@@ -561,6 +616,79 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+    Handler mHandler1 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            gametv.setText(msg.arg1+"");
+
+            if(msg.what==1 && msg.arg1==5){
+                two+=1;
+                gametv.setText("2등 횟수"+two+"");
+            }
+        }
+    };
+
+    class CalThread2 implements Runnable {
+        int[] arr;
+        Lotto L1 = new Lotto();
+        Random rd = new Random();
+        int bonus;
+
+        CalThread2(int []arr){
+            this.arr=arr;
+            bonus=0;
+        }
+
+        public void run()
+        {
+            while (th_flag2)
+            {
+                L1.setLotto();
+                int count=Lottocheck(arr,L1.arr);
+                if(count==5)
+                {
+                    bonus=rd.nextInt(45)+1;
+                    for(int i=0; i<6;i++) {
+                        if (arr[i] == bonus) {
+                            try {
+                                Thread.sleep(200);
+                                Message msg = mHandler1.obtainMessage();
+                                msg.arg1 = count;
+                                msg.what = 1; //2등임.
+                                mHandler1.sendMessage(msg);
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
+                }
+
+                try {
+                    Thread.sleep(200);
+                    if(count>3)
+                    {
+                        Message msg = mHandler1.obtainMessage();
+                        msg.arg1=count;
+                        mHandler1.sendMessage(msg);
+                    }
+                } catch (Exception e) {
+
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
+
 
 
 }

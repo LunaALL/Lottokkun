@@ -416,7 +416,8 @@
                     android:gravity="center_horizontal"
                     android:text="0"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp"></TextView>
+                    android:textSize="30sp"
+                    android:onClick="primenumber"></TextView>
 
                 <TextView
 
@@ -753,6 +754,7 @@
                     android:textColor="#000000"
                     android:textSize="30sp"></TextView>
 
+
             </LinearLayout>
 
 
@@ -900,11 +902,26 @@
                     android:text="값가져오기"
                     android:onClick="gmaeset"></Button>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
                 <Button
                     android:id="@+id/View2_gamestart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="시뮬시작"
+                    android:onClick="gmaeset"></Button>
+
+                <Button
+                    android:id="@+id/View2_gamestop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="멈춤"
                     android:onClick="gmaeset"></Button>
 
             </LinearLayout>
@@ -916,11 +933,39 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/View2_gameTV"
                 android:text="상 태 변 환"
-                android:textSize="25dp">
-
-
-
+                android:textSize="15dp">
             </TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lotto1">
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lotto2">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lotto3">
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lotto4">
+                </TextView>
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
