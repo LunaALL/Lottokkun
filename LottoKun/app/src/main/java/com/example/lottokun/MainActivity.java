@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         customDialog = new CustomDialog(this, positiveListener, negativeListener);
         customDialog2 = new CustomDialog(this, positiveListener1, negativeListener1);
         customDialog3 = new CustomDialog(this,positiveListener3,negativeListener3);
+        customDialog4 = new CustomDialog(this,positiveListener4,negativeListener4);
 
         gametv=(TextView)findViewById(R.id.View2_gameTV);
 
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
                 customDialog3.show();
                 break;
             case R.id.gridaaa4:
+                customDialog4.show();
+                break;
 
 
         }
@@ -121,11 +124,13 @@ public class MainActivity extends AppCompatActivity {
         Lotto L1= new Lotto();
         int[] arr={0,0,0,0,0,0};
         TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
+        boolean gametriger= false;
 
 
         switch (view.getId()){
             case R.id.View2_gameran:
                 L1.setLotto();
+                arr=L1.arr;
                 Lottoprint(L1,"grid_game",1500);
 
                 break;
@@ -157,16 +162,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.View2_gamestart:
-                th_flag2=true;
-                    CalThread2 cal =new CalThread2(arr);
-                    Thread th =new Thread(cal);
-                    th.start();
+
+
 
                 break;
             case R.id.View2_gamestop:
-                th_flag2=false;
-                Toast.makeText(getApplicationContext(), "로또 시뮬레이션 종료", Toast.LENGTH_SHORT).show();
-                break;
+
         }
 
 
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
     View.OnClickListener positiveListener1 = new View.OnClickListener() {
         public void onClick(View v) {
-            TextView primeview2=(TextView)findViewById(R.id.grida1);
+            TextView primeview2=(TextView)findViewById(R.id.grida4);
                primenum2=customDialog2.getPrime();
                prime_flag=true;
                primeview2.setText(primenum2+"");
@@ -223,7 +224,25 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener negativeListener3 = new View.OnClickListener() {
         public void onClick(View v) {
             Toast.makeText(getApplicationContext(), "취소버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
-            customDialog2.dismiss();
+            customDialog3.dismiss();
+        }
+    };
+
+    View.OnClickListener positiveListener4 = new View.OnClickListener() {
+        public void onClick(View v) {
+            TextView primeview4=findViewById(R.id.gridaaa4);
+            prime_flag=true;
+            primenum4=customDialog4.getPrime();
+            primeview4.setText(primenum4+"");
+            customDialog4.dismiss();
+            Toast.makeText(getApplicationContext(), "고정 수 (" + primenum4+ ") 선택 완료", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    View.OnClickListener negativeListener4 = new View.OnClickListener() {
+        public void onClick(View v) {
+            Toast.makeText(getApplicationContext(), "취소버튼이 눌렸습니다.", Toast.LENGTH_SHORT).show();
+            customDialog4.dismiss();
         }
     };
 
@@ -616,80 +635,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-
-    Handler mHandler1 = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            gametv.setText(msg.arg1+"");
-
-            if(msg.what==1 && msg.arg1==5){
-                two+=1;
-                gametv.setText("2등 횟수"+two+"");
-            }
-        }
-    };
-
-    class CalThread2 implements Runnable {
-        int[] arr;
-        Lotto L1 = new Lotto();
-        Random rd = new Random();
-        int bonus;
-
-        CalThread2(int []arr){
-            this.arr=arr;
-            bonus=0;
-        }
-
-        public void run()
-        {
-            while (th_flag2)
-            {
-                L1.setLotto();
-                int count=Lottocheck(arr,L1.arr);
-                if(count==5)
-                {
-                    bonus=rd.nextInt(45)+1;
-                    for(int i=0; i<6;i++) {
-                        if (arr[i] == bonus) {
-                            try {
-                                Thread.sleep(200);
-                                Message msg = mHandler1.obtainMessage();
-                                msg.arg1 = count;
-                                msg.what = 1; //2등임.
-                                mHandler1.sendMessage(msg);
-                            } catch (Exception e) {
-
-                            }
-                        }
-                    }
-                }
-
-                try {
-                    Thread.sleep(200);
-                    if(count>3)
-                    {
-                        Message msg = mHandler1.obtainMessage();
-                        msg.arg1=count;
-                        mHandler1.sendMessage(msg);
-                    }
-                } catch (Exception e) {
-
-                }
-
-
-            }
-
-
-        }
-
-
-    }
-
-
-
 
 }
 
