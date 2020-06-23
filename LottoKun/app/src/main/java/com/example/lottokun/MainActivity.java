@@ -165,9 +165,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                 break;
+
             case R.id.View2_gamestop:
 
+                break;
         }
 
 
