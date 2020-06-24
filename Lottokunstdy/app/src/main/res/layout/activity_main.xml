@@ -18,6 +18,7 @@
         android:layout_marginRight="148dp"
         android:layout_marginBottom="232dp"
         android:text="스레드시작"
+        android:onClick="thread"
        />
 
     <TextView
