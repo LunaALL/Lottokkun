@@ -1,25 +1,49 @@
 package com.example.lottokun;
 
+import android.os.Handler;
+import android.os.Message;
+
 import java.util.Random;
-import java.util.logging.Handler;
+
 
 public class CalthreadGame extends Thread {
 
     static Random rnd= new Random();
     Handler mhandler;
-    int[] temp;
+    int[] arr;
+    int[] temp= {0,0,0,0,0,0};
     boolean stop_flag=true;
+    int num;
 
-    public CalthreadGame(int[] arr){
-        temp=arr;
+    public CalthreadGame(Handler mhandler){
+        this.mhandler=mhandler;
+    }
+
+    public void setArr(int[]arr){
+        this.arr=arr;
     }
     @Override
     public void run() {
 
         while(stop_flag){
+            temp=ran();
+            num=lottocheck(arr,temp);
 
-
-
+            switch(num){
+                case 1:
+                    Message msg= Message.obtain(mhandler,1);
+                    mhandler.sendMessage(msg);
+                    break;
+                case 2:
+                    mhandler.sendEmptyMessage(2);
+                    break;
+                case 3:
+                    mhandler.sendEmptyMessage(3);
+                    break;
+                case 4:
+                    mhandler.sendEmptyMessage(4);
+                    break;
+            }
 
         }
 
@@ -32,9 +56,6 @@ public class CalthreadGame extends Thread {
         this.stop_flag=stop_flag;
     }
 
-    public void setHandler(Handler mhandler){
-        this.mhandler=mhandler;
-    }
 
     public static int lottocheck(int []arr, int []arr2) {
 
@@ -68,46 +89,14 @@ public class CalthreadGame extends Thread {
     }
 
     public static int[] ran() {
+        int[] temp={0,0,0,0,0,0};
+        int i=0;
+       while(i<temp.length){
+           temp[i]=rnd.nextInt(45)+1;
+       }
 
-
+       return temp;
 
     }
 }
 
-  new Thread(new Runnable() {
-@Override
-public void run() {
-        Lotto L1 =new Lotto();
-        Lotto L2 =new Lotto();
-        L1.setLotto(arr2);
-        gamerun =true;
-        int num=0;
-
-        while(gamerun){
-        L1.setLotto();
-        num=lottocheck(L1,L2);
-        switch (num){
-        case 1:
-        one++;
-        break;
-        case 2:
-        two++;
-        break;
-        case 3:
-        three++;
-        break;
-        case 4:
-        four++;
-        break;
-        }
-
-        handler2.post(new Runnable() {
-@Override
-public void run() {
-        tv.setText("1등 "+one+"회 2등 "+two+"회 3등 "+three+"회 4등 "+four+"회");
-        //뷰
-        }
-        });
-        }
-        }
-        });

@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView gametv;
 
-    boolean gamerun;
+
     Handler handler2;
 
 
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         Lotto L1= new Lotto();
         int[] arr={0,0,0,0,0,0};
         TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
+        CalthreadGame game= new CalthreadGame(mHandler1);
 
 
 
@@ -157,14 +158,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.View2_gamestart:
-                final int [] arr2=arr;
-                final TextView tv=(TextView)findViewById(R.id.View2_gameTV);
+                int arr2[]= new int[6];
+                for(int i=0;i<6;i++){
+                    arr2[i]=arr[i];
+                }
+                game.setArr(arr2);
+                game.setDaemon(true);
+                game.start();
 
                 //컨트롤러
                 break;
 
             case R.id.View2_gamestop:
-                gamerun=false;
+                game.interrupt();
+
 
                 break;
         }
@@ -622,10 +629,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    Handler mHandler1 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 1:
+                    gametv.setText("1등 찾았다!! ");
+                    //tv.setText("1등 "+one+"회 2등 "+two+"회 3등 "+three+"회 4등 "+four+"회");
+                    break;
+            }
+        }
+    };
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
+
             setLottoPrint(1000);
             TextView value = (TextView) findViewById(R.id.ValueText);
             value.setText(number + " 회 반복중입니다. ");
