@@ -4,10 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ValueAnimator;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,18 +13,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     int primenum1,primenum2,primenum3,primenum4=0;
 
-    int one,two,three=0;
+    int one,two,three,four=0;
 
 
     TextView valtv; //횟수모니터
@@ -57,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> Adapter;
 
     TextView gametv;
+
+    boolean gamerun;
+    Handler handler2;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         customDialog4 = new CustomDialog(this,positiveListener4,negativeListener4);
 
         gametv=(TextView)findViewById(R.id.View2_gameTV);
+        handler2=new Handler();
 
     }
 
@@ -124,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         Lotto L1= new Lotto();
         int[] arr={0,0,0,0,0,0};
         TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
-        boolean gametriger= false;
+
 
 
         switch (view.getId()){
@@ -162,15 +157,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.View2_gamestart:
+                final int [] arr2=arr;
+                final TextView tv=(TextView)findViewById(R.id.View2_gameTV);
 
-
-
-
-
-
+                //컨트롤러
                 break;
 
             case R.id.View2_gamestop:
+                gamerun=false;
 
                 break;
         }
@@ -508,18 +502,38 @@ public class MainActivity extends AppCompatActivity {
         return arr2;
     } //랜덤 넘버 생성 메소드
 
-    public static int Lottocheck(int[] arr, int[] arr2) {
+    public static int lottocheck(Lotto L1, Lotto L2) {
+        Random rd = new Random();
         int num = 0;
+        int value=0;
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                if (arr[i] == arr2[j]) {
+                if (L1.arr[i] == L2.arr[j]) {
                     num++;
                 }
             }
         }
 
-        return num;
+        if(num==6){
+            return 1;
+        }else if(num==5){
+            value=rd.nextInt(45)+1;
+            for(int i=0; i<6; i++){
+                if(L1.arr[i]==value){
+                    return 2;
+                }else{
+                    return 3;
+                }
+            }
+
+        }else if(num==4){
+            return 4;
+        }
+
+
+
+        return 0;
     }  //잠시 구현, 로또 비교
 
     public void setLottoPrint(int num) {
