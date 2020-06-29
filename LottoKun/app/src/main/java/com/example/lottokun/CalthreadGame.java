@@ -66,6 +66,7 @@ public class CalthreadGame extends Thread {
             for (int j = 0; j < 6; j++) {
                 if (arr[i] == arr2[j]) {
                     num++;
+                    break;
                 }
             }
         }
@@ -92,7 +93,7 @@ public class CalthreadGame extends Thread {
         int[] temp={0,0,0,0,0,0};
         int i=0;
        while(i<temp.length){
-           temp[i]=rnd.nextInt(45)+1;
+           temp[i++]=rnd.nextInt(45)+1;
        }
 
        return temp;
