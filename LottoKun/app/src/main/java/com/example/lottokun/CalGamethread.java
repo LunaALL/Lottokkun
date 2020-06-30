@@ -3,11 +3,11 @@ package com.example.lottokun;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+
 
 import java.util.Random;
 
-public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
+class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
 
 
     int[] arr;
@@ -19,18 +19,20 @@ public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
     int num1,num2,num3,num4;
 
 
-    CalGamethread(int[] arr,TextView valueTV){
-        this.arr=arr;
+    CalGamethread(TextView valueTV){
+
         this.ValueTV=valueTV;
         ran();
     }
 
-    public void setTextview(TextView t1 , TextView t2, TextView t3, TextView t4){
+    void setTextview(TextView t1 , TextView t2, TextView t3, TextView t4){
         this.T1=t1;
         this.T2=t2;
         this.T3=t3;
         this.T4=t4;
-
+    }
+     void setArr(int[] arr){
+        this.arr=arr;
     }
 
     protected void onPreExecute() {
@@ -75,6 +77,10 @@ public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
             //밑 대신 이렇게해도됨 if (value >= values[0].intValue())
 
         }
+
+        if(isCancelled()){
+            return 0;
+        }
         return value;
     }
 
@@ -100,6 +106,11 @@ public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
             T3.setText("3등 "+num3 +" 번 당첨" );
         }
 
+        if(values[0]==0 && values[1]==4){
+            num4++;
+            T4.setText("4등 "+num4 +" 번 당첨" );
+        }
+
 
 
 
@@ -108,15 +119,14 @@ public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
 
     //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
     protected void onPostExecute(Integer result) {
-
     }
 
     //Task가 취소되었을때 호출
     protected void onCancelled() {
-        ValueTV.setText("취소되었습니다");
+        ValueTV.setText("취소되었습니다" + value +"회 마침");
     }
 
-    public static int lottocheck(int[] arr, int[] arr2) {
+    static int lottocheck(int[] arr, int[] arr2) {
         Random rnd =new Random();
         int num = 0;
         int value=0;

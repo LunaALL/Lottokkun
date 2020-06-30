@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     int primenum1,primenum2,primenum3,primenum4=0;
 
-    int one,two,three,four=0;
-
 
     TextView valtv; //횟수모니터
     ListView Lottoitem;
-    boolean th_flag, th_flag2 = true;
+    boolean th_flag= true;
     boolean prime_flag = false; //프라임넘버
     boolean noclear=false;
     int number = 0; //횟수
@@ -48,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> Adapter;
 
     TextView gametv;
+    int[] Temparr={0,0,0,0,0,0};
 
 
-    Handler handler2;
+
+    CalGamethread game ;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,44 @@ public class MainActivity extends AppCompatActivity {
         customDialog4 = new CustomDialog(this,positiveListener4,negativeListener4);
 
         gametv=(TextView)findViewById(R.id.View2_gameTV);
-        handler2=new Handler();
+
+
+
+
+
+
+
+
+        Button excutebtn = (Button)findViewById(R.id.View2_gamestart);
+        Button stopbtn = (Button)findViewById(R.id.View2_gamestop);
+        excutebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0;i<6;i++){
+                    if(Temparr[i]==0){
+                        gametv.setText("로또 숫자를 지정해주세요");
+                        return;
+                    }
+                }
+                TextView tv1=(TextView)findViewById(R.id.lottoa1);
+                TextView tv2=(TextView)findViewById(R.id.lottoa2);
+                TextView tv3=(TextView)findViewById(R.id.lottoa3);
+                TextView tv4=(TextView)findViewById(R.id.lottoa4);
+                game =new CalGamethread(gametv);
+                game.setTextview(tv1,tv2,tv3,tv4);
+                game.setArr(Temparr);
+                game.execute();
+            }
+        });
+
+
+
+        stopbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.cancel(true);
+            }
+        });
 
     }
 
@@ -117,62 +154,52 @@ public class MainActivity extends AppCompatActivity {
     //View2 로또 시뮬 클릭리스너.
     public void gmaeset(View view){
         Lotto L1= new Lotto();
-        int[] arr={0,0,0,0,0,0};
-        TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
-
 
 
 
         switch (view.getId()){
             case R.id.View2_gameran:
                 L1.setLotto();
-                arr=L1.arr;
+                for(int i=0; i<6;i++){
+                    Temparr[i]=L1.arr[i];
+                }
+
                 Lottoprint(L1,"grid_game",1500);
 
                 break;
             case R.id.View2_gamechoice:
-                arr=getchoice("grid_gameE");
+                Temparr=getchoice("grid_gameE");
                 for(int i=0; i<6;i++){
-                    if(arr[i]<=0 || arr[i]>45){
-                        gametv.setText("1~45 사이에 숫자를 모든 칸에 입력하세요.");
+                    if(Temparr[i]<=0 || Temparr[i]>45){
+                        gametv.setText("1~45 사이에 숫자를 6칸 안에 입력해주세요.");
                         return;
                     }
                 }
-                L1.setLotto(arr);
+                L1.setLotto(Temparr);
                 Lottoprint(L1,"grid_game",1500);
                 gametv.setText("커스텀 픽 완료");
 
                 break;
 
             case R.id.View2_gameload:
+                if(buffer==null){
+                    gametv.setText("세번째 탭에서 저장한 번호를 선택해주세요");
+                    return;
+                }
+
+
                String test=buffer.replaceAll(" ","");  //공백제거!
                String[] arrbuf = test.split("\\|"); //특문 버그있어서 \\붙여야함.
                 for(int i=0; i<6;i++){
-                    arr[i]=Integer.parseInt(arrbuf[i]);
+                    Temparr[i]=Integer.parseInt(arrbuf[i]);
                 }
-                L1.setLotto(arr);
+                L1.setLotto(Temparr);
                 Lottoprint(L1,"grid_game",1500);
                 Toast.makeText(getApplicationContext(), "저장된 로또를 성공적으로 가져왔습니다.", Toast.LENGTH_SHORT).show();
                gametv.setText(arrbuf[0]+" | "+arrbuf[1]+" | "+arrbuf[2]+" | "+arrbuf[3]+" | "+arrbuf[4]+" | "+arrbuf[5] +" 저장로또 픽 완료");
 
                 break;
 
-            case R.id.View2_gamestart:
-                int arr2[]= new int[6];
-                for(int i=0;i<6;i++){
-                    arr2[i]=arr[i];
-                }
-                CalGamethread game = new CalGamethread(arr2,gametv);
-
-
-                //컨트롤러
-                break;
-
-            case R.id.View2_gamestop:
-
-
-
-                break;
         }
 
 

@@ -932,7 +932,8 @@
                     android:layout_height="wrap_content"
                     android:text="멈춤"
                     android:onClick="gmaeset"
-                    android:background="@drawable/layout_shape"></Button>
+                    android:background="@drawable/layout_shape"
+                    android:visibility="invisible"></Button>
 
 
 
@@ -958,25 +959,34 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lotto1"
+                    android:id="@+id/lottoa1"
                     android:text="1 등 -> "
-                    android:textSize="10dp">
+                    android:textSize="15dp">
                 </TextView>
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lott2"
+                    android:id="@+id/lottoa2"
                     android:text="2 등 -> "
-                    android:textSize="10dp">
+                    android:textSize="15dp">
                 </TextView>
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/lotto3"
+                    android:id="@+id/lottoa3"
                     android:text="3 등 ->"
-                    android:textSize="10dp">
+                    android:textSize="15dp">
+                </TextView>
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lottoa4"
+                    android:text="4 등 ->"
+                    android:textSize="15dp">
                 </TextView>
 
 
