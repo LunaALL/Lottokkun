@@ -885,45 +885,57 @@
                     android:id="@+id/View2_gameran"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="랜덤선택"
-                    android:onClick="gmaeset">
+                    android:text="랜덤픽"
+                    android:onClick="gmaeset"
+                    android:background="@drawable/layout_shape">
                 </Button>
 
                 <Button
                     android:id="@+id/View2_gamechoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="커스텀선택"
-                    android:onClick="gmaeset"></Button>
+                    android:text="커스텀픽"
+                    android:onClick="gmaeset"
+                    android:background="@drawable/layout_shape"></Button>
 
                 <Button
                     android:id="@+id/View2_gameload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="값가져오기"
-                    android:onClick="gmaeset"></Button>
+                    android:onClick="gmaeset"
+                    android:background="@drawable/layout_shape"></Button>
+
+
 
 
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
+                android:gravity="center_horizontal">
+
                 <Button
                     android:id="@+id/View2_gamestart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="시뮬시작"
-                    android:onClick="gmaeset"></Button>
+                    android:onClick="gmaeset"
+                    android:background="@drawable/layout_shape"></Button>
 
                 <Button
                     android:id="@+id/View2_gamestop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="멈춤"
-                    android:onClick="gmaeset"></Button>
+                    android:onClick="gmaeset"
+                    android:background="@drawable/layout_shape"></Button>
+
+
+
 
             </LinearLayout>
 
@@ -941,7 +953,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="center">
+                >
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lotto1"
+                    android:text="1 등 -> "
+                    android:textSize="10dp">
+                </TextView>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lott2"
+                    android:text="2 등 -> "
+                    android:textSize="10dp">
+                </TextView>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lotto3"
+                    android:text="3 등 ->"
+                    android:textSize="10dp">
+                </TextView>
+
 
                 <TextView
                     android:layout_width="wrap_content"

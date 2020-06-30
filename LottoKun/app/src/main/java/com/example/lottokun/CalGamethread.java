@@ -1,88 +1,45 @@
-package com.example.myapplication;
+package com.example.lottokun;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
-
-    TextView textView;
-    TextView st1;
-
-    //백그라운드Task
-    BackgroundTask task;
-    int value;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        textView = (TextView) findViewById(R.id.textView);
-        final int[] arr= {5,20,33,13,14,11};
-        st1= (TextView)findViewById(R.id.game1);
+public class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
 
 
-        // 실행 버튼 이벤트
-        Button executeButton = (Button) findViewById(R.id.executeButton);
-        executeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // 백그라운드 task 생성
-                task = new BackgroundTask(arr,textView,st1);
-                //excute를 통해 백그라운드 task를 실행시킨다
-                //여기선 100을 매개변수로 보내는데 여기 예제에서는 이 매개변수를 doInBackGround에서 사용을 안했다.
-                task.execute();
-            }
-        });
-
-        // 취소 버튼 이벤트
-        Button cancelButton = (Button) findViewById(R.id.cancelButton);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //task종료한다. BackgrounTask의 onCancled()호출될것이다.
-                //이미 스레드가 종료된 뒤에 cancel하면 아무일도 안일어난다. 이미 종료되었기 때문에
-                task.cancel(true);
-            }
-        });
-    }
-
-    //새로운 TASK정의 (AsyncTask)
-    // < >안에 들은 자료형은 순서대로 doInBackground, onProgressUpdate, onPostExecute의 매개변수 자료형을 뜻한다.(내가 사용할 매개변수타입을 설정하면된다)
-
-}
-
-class BackgroundTask extends AsyncTask<Integer , Integer , Integer> {
-    //초기화 단계에서 사용한다. 초기화관련 코드를 작성했다.
     int[] arr;
     int[] arr2={0,0,0,0,0,0};
     int value;
-    TextView textView;
-    TextView textView2;
+    TextView ValueTV, T1,T2,T3,T4;
     int num=0;
     static Random rnd =new Random();
-    int num1=0,num2=0,num3=0,num4=0;
+    int num1,num2,num3,num4;
 
 
-    BackgroundTask (int[] arr,TextView textView,TextView st1){
+    CalGamethread(int[] arr,TextView valueTV){
         this.arr=arr;
-        this.textView=textView;
-        this.textView2=st1;
+        this.ValueTV=valueTV;
         ran();
+    }
+
+    public void setTextview(TextView t1 , TextView t2, TextView t3, TextView t4){
+        this.T1=t1;
+        this.T2=t2;
+        this.T3=t3;
+        this.T4=t4;
+
     }
 
     protected void onPreExecute() {
         value = 0;
-        textView.setText("연산중입니다.");
+        num1=0;
+        num2=0;
+        num3=0;
+        num4=0;
+        ValueTV.setText("연산중입니다.");
     }
 
     void ran() {
@@ -125,22 +82,22 @@ class BackgroundTask extends AsyncTask<Integer , Integer , Integer> {
     //publishProgress(value)의 value를 값으로 받는다.values는 배열이라 여러개 받기가능
     protected void onProgressUpdate(Integer ... values) {
         if(values[0]==1){
-            textView.setText("횟수" + values[1].toString());
+            ValueTV.setText("회차 " + values[1].toString()+ "회");
         }
 
 
         if(values[0]==0 && values[1]==1){
             num1++;
-            textView2.setText("1등 "+num1 +" 번 " + " 2등 "+num2 +" 번 " + " 3등 "+num3 +" 번 ");
+            T1.setText(" 1등 "+num1 +" 번 당첨 ");
         }
         if(values[0]==0 && values[1]==2){
             num2++;
-            textView2.setText("1등 "+num1 +"번" + "2등 "+num2 +"번" + "3등 "+num3 +"번");
+            T2.setText("2등 "+num2 +" 번 당첨" );
         }
 
         if(values[0]==0 && values[1]==3){
             num3++;
-            textView2.setText("1등 "+num1 +"번" + "2등 "+num2 +"번" + "3등 "+num3 +"번");
+            T3.setText("3등 "+num3 +" 번 당첨" );
         }
 
 
@@ -156,7 +113,7 @@ class BackgroundTask extends AsyncTask<Integer , Integer , Integer> {
 
     //Task가 취소되었을때 호출
     protected void onCancelled() {
-        textView.setText("취소되었습니다");
+        ValueTV.setText("취소되었습니다");
     }
 
     public static int lottocheck(int[] arr, int[] arr2) {
@@ -190,7 +147,3 @@ class BackgroundTask extends AsyncTask<Integer , Integer , Integer> {
         return 0;
     }
 }
-
-
-
-

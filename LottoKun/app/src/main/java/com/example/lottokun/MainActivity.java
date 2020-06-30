@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         Lotto L1= new Lotto();
         int[] arr={0,0,0,0,0,0};
         TextView gametv=(TextView)findViewById(R.id.View2_gameTV);
-        CalthreadGame game= new CalthreadGame(mHandler1);
+
 
 
 
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 L1.setLotto(arr);
                 Lottoprint(L1,"grid_game",1500);
                 Toast.makeText(getApplicationContext(), "저장된 로또를 성공적으로 가져왔습니다.", Toast.LENGTH_SHORT).show();
-               gametv.setText(arrbuf[0]+arrbuf[1]+arrbuf[2]+arrbuf[3]+arrbuf[4]+arrbuf[5] +"저장로또 픽 완료");
+               gametv.setText(arrbuf[0]+" | "+arrbuf[1]+" | "+arrbuf[2]+" | "+arrbuf[3]+" | "+arrbuf[4]+" | "+arrbuf[5] +" 저장로또 픽 완료");
 
                 break;
 
@@ -162,15 +162,14 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0;i<6;i++){
                     arr2[i]=arr[i];
                 }
-                game.setArr(arr2);
-                game.setDaemon(true);
-                game.start();
+                CalGamethread game = new CalGamethread(arr2,gametv);
+
 
                 //컨트롤러
                 break;
 
             case R.id.View2_gamestop:
-                game.interrupt();
+
 
 
                 break;
