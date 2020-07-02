@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="로또 게임"
+            android:text="로또 시뮬"
             android:textColor="#FFFFFF" />
 
         <RadioButton
@@ -933,7 +933,7 @@
                     android:text="멈춤"
                     android:onClick="gmaeset"
                     android:background="@drawable/layout_shape"
-                    android:visibility="invisible"></Button>
+                    ></Button>
 
 
 
@@ -946,7 +946,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/View2_gameTV"
-                android:text="상 태 변 환"
+                android:text=" "
                 android:textSize="15dp">
             </TextView>
 
@@ -954,6 +954,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_margin="10dp"
                 >
                 <TextView
 
@@ -990,6 +991,15 @@
                 </TextView>
 
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -1011,6 +1021,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lotto4">
                 </TextView>
+
+
 
 
             </LinearLayout>
@@ -1039,7 +1051,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/layout_shape"
                     android:onClick="View3_btn"
-                    android:text="커스텀픽" />
+                    android:text="커스텀번호지정" />
 
                 <Button
                     android:id="@+id/View3_btn2"
@@ -1048,7 +1060,7 @@
                     android:layout_weight="3"
                     android:background="@drawable/layout_shape"
                     android:onClick="View3_btn"
-                    android:text="Delete" />
+                    android:text="삭제" />
 
 
             </LinearLayout>

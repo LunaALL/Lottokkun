@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                         countnum++;
                     }
                 }
-                Toast.makeText(getApplicationContext(), "다중선택시 제일 위 번호를 택합니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "다중선택시 상단 선택한 번호를 택합니다.", Toast.LENGTH_SHORT).show();
                 break;
 
 
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                 th_flag = true;
                 saveflag = true;
                 noclear=true;
-                int num = 0;
+
                 pross.setVisibility(View.VISIBLE);
                 stopbtn.setVisibility(View.VISIBLE);
 
@@ -418,6 +418,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.main_btn2:
                 setLottoPrint(2000);
+                valtv.setText(" ");
                 saveflag = true;
                 noclear=true; //클리어 플래그
 
@@ -436,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.main_btn4:
                 th_flag = false;
                 if (number > 1) {
-                    valtv.setText((number - 1) + "회");
+                    valtv.setText((number - 1) + " 회");
                 }
                 pross.setVisibility(View.INVISIBLE);
                 break;
@@ -535,39 +536,7 @@ public class MainActivity extends AppCompatActivity {
         return arr2;
     } //랜덤 넘버 생성 메소드
 
-    public static int lottocheck(Lotto L1, Lotto L2) {
-        Random rd = new Random();
-        int num = 0;
-        int value=0;
-
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 6; j++) {
-                if (L1.arr[i] == L2.arr[j]) {
-                    num++;
-                }
-            }
-        }
-
-        if(num==6){
-            return 1;
-        }else if(num==5){
-            value=rd.nextInt(45)+1;
-            for(int i=0; i<6; i++){
-                if(L1.arr[i]==value){
-                    return 2;
-                }else{
-                    return 3;
-                }
-            }
-
-        }else if(num==4){
-            return 4;
-        }
-
-
-
-        return 0;
-    }  //잠시 구현, 로또 비교
+   //잠시 구현, 로또 비교
 
     public void setLottoPrint(int num) {
         Lotto L1 = new Lotto();
@@ -655,17 +624,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    Handler mHandler1 = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
-                case 1:
-                    gametv.setText("1등 찾았다!! ");
-                    //tv.setText("1등 "+one+"회 2등 "+two+"회 3등 "+three+"회 4등 "+four+"회");
-                    break;
-            }
-        }
-    };
+
 
     Handler mHandler = new Handler() {
         @Override
@@ -673,7 +632,7 @@ public class MainActivity extends AppCompatActivity {
 
             setLottoPrint(1000);
             TextView value = (TextView) findViewById(R.id.ValueText);
-            value.setText(number + " 회 반복중입니다. ");
+            value.setText(number + " 회 반복중입니다... ");
             number++;
         }
     };

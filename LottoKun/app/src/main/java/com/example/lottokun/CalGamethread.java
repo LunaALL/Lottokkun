@@ -123,7 +123,7 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
 
     //Task가 취소되었을때 호출
     protected void onCancelled() {
-        ValueTV.setText("취소되었습니다" + value +"회 마침");
+        ValueTV.setText(" " + value +" 회 로또 시뮬레이션 마침.");
     }
 
     static int lottocheck(int[] arr, int[] arr2) {
