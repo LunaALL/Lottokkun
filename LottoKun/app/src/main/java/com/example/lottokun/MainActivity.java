@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.View2_gameload:
                 if(buffer==null){
-                    gametv.setText("세번째 탭에서 저장한 번호를 선택해주세요");
+                    gametv.setText("에서 저장한 번호를 선택해주세요");
                     return;
                 }
 
@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                 Lottoprint(L1,"grid_game",1500);
                 Toast.makeText(getApplicationContext(), "저장된 로또를 성공적으로 가져왔습니다.", Toast.LENGTH_SHORT).show();
                gametv.setText(arrbuf[0]+" | "+arrbuf[1]+" | "+arrbuf[2]+" | "+arrbuf[3]+" | "+arrbuf[4]+" | "+arrbuf[5] +" 저장로또 픽 완료");
-
                 break;
 
         }
