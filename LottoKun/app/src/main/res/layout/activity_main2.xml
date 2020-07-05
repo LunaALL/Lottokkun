@@ -6,20 +6,7 @@
     android:orientation="vertical"
    >
 
-    <TextView
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1등 기운 받아가세요"
-        android:textStyle="bold">
-    </TextView>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/lotto">
-    </ImageView>
 
 
 
@@ -384,12 +371,26 @@
                     android:text="7"
                     />
 
-
-
             </TableRow>
 
 
         </TableLayout>
+
+        <ProgressBar
+            android:layout_below="@+id/patten"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_gravity="center">
+        </ProgressBar>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading.....">
+        </TextView>
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -397,10 +398,12 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Copyright © 2020 김씨개발자 wooju407@naver.com">
+                android:text="Copyright © 2020 '김씨개발자' wooju407@naver.com">
             </TextView>
 
             <TextView
