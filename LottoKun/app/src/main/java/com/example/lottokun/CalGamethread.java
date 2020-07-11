@@ -12,15 +12,15 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
 
     int[] arr;
     int[] arr2={0,0,0,0,0,0};
-    int value;
+    int value=0;
     TextView ValueTV, T1,T2,T3,T4;
     int num=0;
     static Random rnd =new Random();
-    int num1,num2,num3,num4;
+    int num1=0,num2=0,num3=0,num4=0;
+    static Lottovalue saveg;
 
 
     CalGamethread(TextView valueTV){
-
         this.ValueTV=valueTV;
         ran();
     }
@@ -36,12 +36,15 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
     }
 
     protected void onPreExecute() {
-        value = 0;
-        num1=0;
-        num2=0;
-        num3=0;
-        num4=0;
         ValueTV.setText("연산중입니다.");
+        if(saveg!=null){
+            num1=saveg.num1;
+            num2=saveg.num2;
+            num3=saveg.num3;
+            num4=saveg.num4;
+            value=saveg.value;
+
+        }
     }
 
     void ran() {
@@ -112,36 +115,37 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
         }
 
 
-
-
     }
 
 
     //이 Task에서(즉 이 스레드에서) 수행되던 작업이 종료되었을 때 호출됨
     protected void onPostExecute(Integer result) {
+
     }
 
     //Task가 취소되었을때 호출
     protected void onCancelled() {
         ValueTV.setText(" " + value +" 회 로또 시뮬레이션 마침.");
+        Lottovalue save=new Lottovalue(num1,num2,num3,num4,value);
+        MainActivity.savegame(save);
     }
 
     static int lottocheck(int[] arr, int[] arr2) {
         Random rnd =new Random();
-        int num = 0;
+        int numtemp = 0;
         int value=0;
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 if (arr[i] == arr2[j]) {
-                    num++;
+                    numtemp++;
                     break;
                 }
             }
         }
 
-        if(num==6){
+        if(numtemp==6){
             return 1;
-        }else if(num==5){
+        }else if(numtemp==5){
             value=rnd.nextInt(45)+1;
             for(int i=0; i<6; i++){
                 if(arr[i]==value){
@@ -150,10 +154,17 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
                     return 3;
                 }
             }
-        }else if(num==4){
+        }else if(numtemp==4){
             return 4;
         }
 
         return 0;
     }
+
+    public void savegame1(Lottovalue val){
+        saveg=val;
+    }
+
+
+
 }

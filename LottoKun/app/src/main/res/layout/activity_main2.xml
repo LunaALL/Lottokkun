@@ -376,7 +376,10 @@
 
         </TableLayout>
 
+
+
         <ProgressBar
+            android:id="@+id/progressc1"
             android:layout_below="@+id/patten"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -385,10 +388,17 @@
         </ProgressBar>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/progressc1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Loading.....">
+            android:text="Loading....."
+            android:gravity="center">
         </TextView>
+
+
+
+
 
 
 

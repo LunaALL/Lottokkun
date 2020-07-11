@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     TextView gametv;
     int[] Temparr={0,0,0,0,0,0};
 
+    static Lottovalue savgame;
+
 
 
     CalGamethread game ;
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button excutebtn = (Button)findViewById(R.id.View2_gamestart);
         Button stopbtn = (Button)findViewById(R.id.View2_gamestop);
+        Button chogi = (Button)findViewById(R.id.View2_gamechogi);
         excutebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 game =new CalGamethread(gametv);
                 game.setTextview(tv1,tv2,tv3,tv4);
                 game.setArr(Temparr);
+                if(savgame!=null){
+                    game.savegame1(savgame);
+                }
                 game.execute();
             }
         });
@@ -124,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 game.cancel(true);
+            }
+        });
+        chogi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -198,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "저장된 로또를 성공적으로 가져왔습니다.", Toast.LENGTH_SHORT).show();
                gametv.setText(arrbuf[0]+" | "+arrbuf[1]+" | "+arrbuf[2]+" | "+arrbuf[3]+" | "+arrbuf[4]+" | "+arrbuf[5] +" 저장로또 픽 완료");
                 break;
+
 
         }
 
@@ -656,6 +669,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    static void savegame(Lottovalue val){
+        savgame=val;
     }
 
 }
