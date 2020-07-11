@@ -135,6 +135,14 @@ public class MainActivity extends AppCompatActivity {
         chogi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                game.cancel(true);
+                savgame.num1=0;
+                savgame.num2=0;
+                savgame.num3=0;
+                savgame.num4=0;
+                savgame.value=0;
+
+                game.chogi();
 
             }
         });

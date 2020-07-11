@@ -899,6 +899,7 @@
                     android:background="@drawable/layout_shape"></Button>
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/View2_gameload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -936,6 +937,7 @@
                     ></Button>
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/View2_gamechogi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

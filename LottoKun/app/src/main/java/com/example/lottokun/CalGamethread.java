@@ -165,6 +165,15 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
         saveg=val;
     }
 
+    public void chogi(){
+        ValueTV.setText("시뮬레이션 초기화 완료");
+        T1.setText("1등 ");
+        T2.setText("2등 " );
+        T3.setText("3등 " );
+        T4.setText("4등 " );
+
+    }
+
 
 
 }
