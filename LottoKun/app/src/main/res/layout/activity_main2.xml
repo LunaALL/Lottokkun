@@ -13,7 +13,21 @@
         android:layout_height="match_parent"
         >
 
+
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="본 앱은 로또 번호를 제공하지만, \n로또 당첨을 보장하진 않습니다. "
+            android:textSize="15dp"
+            android:textColor="#3AEAB3"
+            android:layout_gravity="center"
+            android:layout_above="@id/lottotv"
+            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true">
+        </TextView>
+
+        <TextView
+            android:id="@+id/lottotv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="로또쿤 추천 패턴"

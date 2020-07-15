@@ -1,4 +1,4 @@
-package com.example.lottokun;
+package com.lottotest.lottokun;
 
 import android.os.AsyncTask;
 import android.widget.TextView;

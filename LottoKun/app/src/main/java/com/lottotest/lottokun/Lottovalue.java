@@ -1,4 +1,4 @@
-package com.example.lottokun;
+package com.lottotest.lottokun;
 
 public class Lottovalue {
     int num1=0 ,num2=0 ,num3=0 , num4=0, value=0;

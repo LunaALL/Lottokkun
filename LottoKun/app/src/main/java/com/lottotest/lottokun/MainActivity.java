@@ -1,4 +1,4 @@
-package com.example.lottokun;
+package com.lottotest.lottokun;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
