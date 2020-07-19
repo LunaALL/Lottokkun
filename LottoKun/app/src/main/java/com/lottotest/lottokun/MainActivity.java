@@ -379,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
 
     void Lottoprint(Lotto L1, String View_name, int num) {
         for (int i = 0; i < L1.arr.length; i++) {
-            int resID = getResources().getIdentifier(View_name + i, "id", "com.example.lottokun"); //view name 을 기준으로
+            int resID = getResources().getIdentifier(View_name + i, "id", "com.lottotest.lottokun"); //view name 을 기준으로
             TextView View123 = ((TextView) findViewById(resID));
             startCountAnimation(View123, L1.arr[i], num);
         }
