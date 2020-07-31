@@ -413,8 +413,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -425,7 +423,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Language JAVA, 29 SDK, release version 0.01 v">
+                android:text="Language JAVA, 29 SDK, release version 4.0">
             </TextView>
 
         </LinearLayout>

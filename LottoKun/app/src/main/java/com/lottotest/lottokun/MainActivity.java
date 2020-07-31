@@ -174,9 +174,6 @@ public class MainActivity extends AppCompatActivity {
     //View2 로또 시뮬 클릭리스너.
     public void gmaeset(View view){
         Lotto L1= new Lotto();
-
-
-
         switch (view.getId()){
             case R.id.View2_gameran:
                 L1.setLotto();
@@ -626,7 +623,7 @@ public class MainActivity extends AppCompatActivity {
         String Lottoitem;
         String buffer;
         for (int i = 0; i < 6; i++) {
-            int resID = getResources().getIdentifier(View_name + i, "id", "com.example.lottokun"); //view name 을 기준으로
+            int resID = getResources().getIdentifier(View_name + i, "id", "com.lottotest.lottokun"); //view name 을 기준으로
             TextView View123 = ((TextView) findViewById(resID));
             buffer = View123.getText().toString().trim();
             if ((Integer.parseInt(buffer)) < 10) {
@@ -679,9 +676,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    static void savegame(Lottovalue val){
-        savgame=val;
-    }
+
 
 }
 
