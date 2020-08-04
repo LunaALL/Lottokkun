@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
     CalGamethread game ;
 
+    boolean Lottosimul= false;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,10 +100,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         Button excutebtn = (Button)findViewById(R.id.View2_gamestart);
-        Button stopbtn = (Button)findViewById(R.id.View2_gamestop);
-        Button chogi = (Button)findViewById(R.id.View2_gamechogi);
+        final Button stopbtn = (Button)findViewById(R.id.View2_gamestop);
+        final Button chogi = (Button)findViewById(R.id.View2_gamechogi);
+        stopbtn.setEnabled(false);
+        chogi.setEnabled(false);
         excutebtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 for(int i=0;i<6;i++){
@@ -117,33 +124,42 @@ public class MainActivity extends AppCompatActivity {
                 game =new CalGamethread(gametv);
                 game.setTextview(tv1,tv2,tv3,tv4);
                 game.setArr(Temparr);
+
                 if(savgame!=null){
                     game.savegame1(savgame);
                 }
+                stopbtn.setEnabled(true);
+                chogi.setEnabled(false);
+                stopbtn.setVisibility(View.VISIBLE);
                 game.execute();
             }
         });
-
 
 
         stopbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.cancel(true);
+                stopbtn.setEnabled(false);
+                stopbtn.setVisibility(View.INVISIBLE);
+                chogi.setEnabled(true);
+
             }
         });
+
         chogi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.cancel(true);
-                savgame.num1=0;
-                savgame.num2=0;
-                savgame.num3=0;
-                savgame.num4=0;
-                savgame.value=0;
+                   stopbtn.setEnabled(false);
+                   chogi.setEnabled(false);
 
-                game.chogi();
+                    savgame.num1=0;
+                    savgame.num2=0;
+                    savgame.num3=0;
+                    savgame.num4=0;
+                    savgame.value=0;
 
+                    game.chogi();
             }
         });
 
@@ -180,27 +196,27 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0; i<6;i++){
                     Temparr[i]=L1.arr[i];
                 }
-
                 Lottoprint(L1,"grid_game",1500);
 
                 break;
             case R.id.View2_gamechoice:
+
                 Temparr=getchoice("grid_gameE");
                 for(int i=0; i<6;i++){
                     if(Temparr[i]<=0 || Temparr[i]>45){
-                        gametv.setText("1~45 사이에 숫자를 6칸 안에 입력해주세요.");
+                        gametv.setText("1~45 사이 숫자를 커스텀 입력 창 안에 입력해주세요.");
                         return;
                     }
                 }
                 L1.setLotto(Temparr);
                 Lottoprint(L1,"grid_game",1500);
-                gametv.setText("커스텀 픽 완료");
+                gametv.setText("저장된 번호를 가져왔습니다.");
 
                 break;
 
             case R.id.View2_gameload:
                 if(buffer==null){
-                    gametv.setText("에서 저장한 번호를 선택해주세요");
+                    gametv.setText("저장 번호 탭에서 시뮬레이션 할 번호를 선택해주세요");
                     return;
                 }
 
@@ -350,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         countnum++;
                     }
                 }
-                Toast.makeText(getApplicationContext(), "다중선택시 상단 선택한 번호를 택합니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "다중선택시 상단 선택한 번호를 택합니다. 커스텀 번호 지정이 완료 되었습니다.", Toast.LENGTH_LONG).show();
                 break;
 
 
@@ -383,10 +399,11 @@ public class MainActivity extends AppCompatActivity {
 
     }//로또 프린트
 
+    //로또 시뮬레이션 용
     int[] getchoice(String View_name){
         int[] arr2=new int[6];
         for(int i=0; i< 6; i++) {
-            int resID = getResources().getIdentifier(View_name+i, "id", "com.example.lottokun");
+            int resID = getResources().getIdentifier(View_name+i, "id", "com.lottotest.lottokun");
             EditText E0 = (EditText) findViewById(resID);
             int num = Integer.parseInt(E0.getText().toString());
             arr2[i]=num;
@@ -472,7 +489,7 @@ public class MainActivity extends AppCompatActivity {
             addSave("gridaa");
             addSave("gridaaa");
             addSave("gridaaaa");
-            Toast myToast = Toast.makeText(this.getApplicationContext(), "All Save complete!!", Toast.LENGTH_SHORT);
+            Toast myToast = Toast.makeText(this.getApplicationContext(), "모든 번호가 저장 되었습니다.", Toast.LENGTH_SHORT);
             myToast.show();
 
         } else {
@@ -485,23 +502,23 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.m1:
                             addSave("grid");
-                            Toast.makeText(getApplication(), "One line save..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "첫번째 줄 번호 6개를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.m2:
                             addSave("grida");
-                            Toast.makeText(getApplication(), "Two line save..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "두번째 줄 번호 6개를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.m3:
                             addSave("gridaa");
-                            Toast.makeText(getApplication(), "Three line save", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "세번째 줄 번호 6개를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.m4:
                             addSave("gridaaa");
-                            Toast.makeText(getApplication(), "Four line save..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "네번째 줄 번호 6개를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                             break;
                         case R.id.m5:
                             addSave("gridaaaa");
-                            Toast.makeText(getApplication(), "Five line save..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), "다섯번째 줄 번호 6개를 저장하였습니다.", Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;
@@ -675,6 +692,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 
 
 

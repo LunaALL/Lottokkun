@@ -127,7 +127,7 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
     protected void onCancelled() {
         ValueTV.setText(" " + value +" 회 로또 시뮬레이션 마침.");
         Lottovalue save=new Lottovalue(num1,num2,num3,num4,value);
-        MainActivity.savegame(save);
+        savegame1(save);
     }
 
     static int lottocheck(int[] arr, int[] arr2) {
@@ -171,7 +171,6 @@ class CalGamethread extends AsyncTask<Integer ,Integer,Integer> {
         T2.setText("2등 " );
         T3.setText("3등 " );
         T4.setText("4등 " );
-
     }
 
 

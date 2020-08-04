@@ -597,7 +597,7 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/layout_shape"
                     android:onClick="Save"
-                    android:text="줄칸 저장">>
+                    android:text="줄별 부분 저장">>
                 </Button>
 
                 <Button
@@ -884,25 +884,27 @@
                     android:id="@+id/View2_gameran"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="랜덤픽"
+                    android:text="랜덤 번호 지정"
                     android:onClick="gmaeset"
                     android:background="@drawable/layout_shape">
                 </Button>
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/View2_gamechoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="커스텀픽"
+                    android:text="커스텀 번호 지정"
                     android:onClick="gmaeset"
-                    android:background="@drawable/layout_shape"></Button>
+                    android:background="@drawable/layout_shape"
+                    ></Button>
 
                 <Button
                     android:layout_marginLeft="10dp"
                     android:id="@+id/View2_gameload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="값가져오기"
+                    android:text="저장 번호 가져오기"
                     android:onClick="gmaeset"
                     android:background="@drawable/layout_shape"></Button>
 
@@ -922,17 +924,19 @@
                     android:id="@+id/View2_gamestart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="시뮬시작"
+                    android:text="연산 시작"
                     android:onClick="gmaeset"
                     android:background="@drawable/layout_shape"></Button>
 
                 <Button
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/View2_gamestop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="멈춤"
+                    android:text="연산 멈춤"
                     android:onClick="gmaeset"
                     android:background="@drawable/layout_shape"
+                    android:visibility="invisible"
                     ></Button>
 
                 <Button
@@ -941,7 +945,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/layout_shape"
-                    android:text="초기화">
+                    android:text="로또 등수 초기화">
 
                 </Button>
 
